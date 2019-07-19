@@ -2,6 +2,8 @@ const Leitura = require("../models/Leitura");
 const Dispositivo = require("../models/Dispositivo");
 const Log = require("../models/Log");
 
+const moment = require("moment");
+
 class LeituraController {
   //==================================================================================================
 
@@ -34,10 +36,14 @@ class LeituraController {
         var gravaLog = {
           data: req.query.data,
           tipo: "LEITURA",
-          texto: `${req.query.data} - FALHA NA LEITURA DO ${req.query.setor}`
+          texto: `${moment(req.query.data).format(
+            "DD/MM/YYYY, hh:mm"
+          )} - FALHA NA LEITURA DO ${req.query.setor}`
         };
         await Log.create(gravaLog);
-        console.log("Falha na leitura do Sengor: " + req.query.setor);
+
+        req.io.emit("erro", gravaLog);
+
         return res.status(200).send("DADO GRAVADO");
       } else {
         req.io.emit("leitura", req.query);
