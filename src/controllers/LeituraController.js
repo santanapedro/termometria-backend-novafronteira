@@ -33,7 +33,8 @@ class LeituraController {
       });
 
       if (req.query.temperatura === "nan" || req.query.umidade === "nan") {
-        if (req.query.setor != "setor-01") {
+        if (req.query.setor != "SETOR-01") {
+          console.log(req.query);
           var gravaLog = {
             data: req.query.data,
             tipo: "LEITURA",
