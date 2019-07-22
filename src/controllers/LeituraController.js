@@ -33,16 +33,18 @@ class LeituraController {
       });
 
       if (req.query.temperatura === "nan" || req.query.umidade === "nan") {
-        var gravaLog = {
-          data: req.query.data,
-          tipo: "LEITURA",
-          texto: `${moment(req.query.data).format(
-            "DD/MM/YYYY, hh:mm"
-          )} - FALHA NA LEITURA DO ${req.query.setor}`
-        };
-        await Log.create(gravaLog);
+        if (req.query.setor != "setor-01") {
+          var gravaLog = {
+            data: req.query.data,
+            tipo: "LEITURA",
+            texto: `${moment(req.query.data).format(
+              "DD/MM/YYYY, hh:mm"
+            )} - FALHA NA LEITURA DO ${req.query.setor}`
+          };
+          await Log.create(gravaLog);
 
-        req.io.emit("erro", gravaLog);
+          req.io.emit("erro", gravaLog);
+        }
 
         return res.status(200).send("DADO GRAVADO");
       } else {

@@ -43,7 +43,7 @@ class GraficoController {
     try {
       var data = req.params.data;
 
-      var labels = ["SETOR01", "SETOR02", "SETOR03"];
+      var labels = ["EXTERNO", "INTERNO"];
 
       var datasets = [
         {
@@ -73,7 +73,7 @@ class GraficoController {
       ];
 
       //============================================================== SETOR - 01
-
+      /*
       const TemperaturaMaximaS1 = await Leitura.findOne({
         $where: `this.data.toJSON().slice(0, 10) == "${data}"`,
         setor: "setor-01"
@@ -117,6 +117,10 @@ class GraficoController {
       } else {
         datasets[3].data.push(0);
       }
+
+      
+      
+      */
 
       //============================================================== SETOR - 02
 
